@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  wetty:
+    image: wettyoss/wetty
+    container_name: wetty
+    restart: always
+    ports:
+      - 3000:3000
+    command:
+      - "--ssh-host=172.17.0.1"
+      - "--ssh-user=shampad"
+      - "--port=3000"
+      - "--base=/"
