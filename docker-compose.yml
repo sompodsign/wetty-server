@@ -9,6 +9,5 @@ services:
       - 3000:3000
     command:
       - "--ssh-host=172.17.0.1"
-      - "--ssh-user=shampad"
       - "--port=3000"
       - "--base=/"
