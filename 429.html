@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limit Exceeded</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .info-box {
+            background: #f7f7f7;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .info-box strong {
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #666;
+        }
+
+        .info-box li {
+            margin: 4px 0;
+        }
+
+        .countdown {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .retry-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .retry-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">⏱️</div>
+        <h1>Rate Limit Exceeded</h1>
+        <p>You've made too many requests in a short period of time. Please wait a moment before trying again.</p>
+
+        <div class="info-box">
+            <strong>Rate Limit Details:</strong>
+            <ul>
+                <li>Limit: 30 requests per second per IP</li>
+                <li>Burst capacity: Up to 100 requests</li>
+                <li>Max concurrent connections: 10</li>
+            </ul>
+        </div>
+
+        <p>Automatic retry in:</p>
+        <div class="countdown" id="countdown">3</div>
+
+        <button class="retry-btn" id="retryBtn" disabled>Retry Now</button>
+    </div>
+
+    <script>
+        let countdown = 3;
+        const countdownEl = document.getElementById('countdown');
+        const retryBtn = document.getElementById('retryBtn');
+
+        const timer = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+
+            if (countdown === 0) {
+                clearInterval(timer);
+                window.location.reload();
+            }
+        }, 1000);
+
+        // Enable manual retry after 1 second
+        setTimeout(() => {
+            retryBtn.disabled = false;
+            retryBtn.onclick = () => window.location.reload();
+        }, 1000);
+    </script>
+</body>
+</html>
